@@ -1,0 +1,56 @@
+{
+  "username": "ad",
+  "cards": [
+    {
+      "id": "ee6ca474-2abc-427f-8fd5-252a1b7bdc8e",
+      "name": "eee",
+      "price": 23,
+      "condition": 7,
+      "imageUrl": "/uploads/meow/4a5f7c42-083f-463d-b1b7-10728fd3c0b3.png",
+      "createdAt": "2026-01-10T10:08:06.237Z"
+    },
+    {
+      "id": "74b242a8-c75d-487f-afc3-632c42c00cad",
+      "name": "413b6183",
+      "price": 13,
+      "condition": 7,
+      "imageUrl": "/uploads/ad/413b6183-8dc4-4419-82d0-a5f47e2d4ab4.png",
+      "createdAt": "2026-01-10T10:14:01.847Z"
+    }
+  ],
+  "trades": [
+    {
+      "id": "79b5e880-1419-4319-bf14-9e21569b0ca7",
+      "from": "meow",
+      "to": "ad",
+      "ownerCardId": "51647b57-da47-448e-8597-38a80a854ee9",
+      "offeredCard": {
+        "id": "ee6ca474-2abc-427f-8fd5-252a1b7bdc8e",
+        "name": "eee",
+        "price": 23,
+        "condition": 7,
+        "imageUrl": "/uploads/meow/4a5f7c42-083f-463d-b1b7-10728fd3c0b3.png",
+        "createdAt": "2026-01-10T10:08:06.237Z"
+      },
+      "status": "accepted",
+      "createdAt": "2026-01-10T10:08:06.237Z"
+    },
+    {
+      "id": "84d28ee0-5547-4297-9acc-1fcd4908caba",
+      "from": "meow",
+      "to": "ad",
+      "ownerCardId": "74b242a8-c75d-487f-afc3-632c42c00cad",
+      "offeredCard": {
+        "id": "190e2994-5e06-469a-8d68-92b45694eba0",
+        "name": "Eac6fb0a",
+        "price": 45,
+        "condition": 7,
+        "imageUrl": "/uploads/meow/eac6fb0a-c1e8-45d3-8dba-fb63dfd944ef.png",
+        "createdAt": "2026-01-10T10:14:18.207Z"
+      },
+      "status": "accepted",
+      "createdAt": "2026-01-10T10:20:54.983Z"
+    }
+  ],
+  "profilePic": "squirtle"
+}

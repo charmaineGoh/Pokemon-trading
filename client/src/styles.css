@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { 
+    color-scheme: light;
+  }
+  
+  html, body { 
+    @apply font-sans antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-image: url('/backgrounds/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100%;
+  }
+
+  /* Fallback gradient if no image is found */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom right, #eff6ff, #e0e7ff, #f3e8ff);
+    z-index: -2;
+  }
+  
+  /* Semi-transparent overlay for readability */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(1px);
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+#root {
+  min-height: 100vh;
+  background: transparent;
+}
+
+@layer components {
+  /* Buttons */
+  .btn { 
+    @apply bg-primary-500 text-white px-5 py-2.5 rounded-lg font-medium;
+    @apply shadow-soft hover:shadow-card hover:bg-primary-600;
+    @apply transition-all duration-200 ease-in-out;
+    @apply active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-yellow { 
+    @apply bg-accent-500 text-gray-900 px-5 py-2.5 rounded-lg font-medium;
+    @apply shadow-soft hover:shadow-card hover:bg-accent-600;
+    @apply transition-all duration-200 ease-in-out;
+    @apply active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  /* Cards */
+  .card { 
+    @apply bg-white rounded-xl shadow-card p-4;
+    @apply border border-gray-100;
+    @apply transition-all duration-300 ease-in-out;
+    @apply hover:shadow-hover;
+  }
+  
+  /* Grid Layout */
+  .grid-cards { 
+    @apply grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+  
+  /* Inputs */
+  input[type="text"],
+  input[type="number"],
+  input[type="file"] {
+    @apply transition-all duration-200;
+  }
+  
+  input[type="text"]:focus,
+  input[type="number"]:focus {
+    @apply ring-2 ring-primary-200 border-primary-500 outline-none;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  /* Confetti animation */
+  .confetti-piece {
+    position: fixed;
+    top: -12px;
+    width: 10px;
+    height: 18px;
+    opacity: 0;
+    animation: confetti-fall 1.1s ease-out forwards;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 2px;
+  }
+
+  @keyframes confetti-fall {
+    0% { opacity: 1; transform: translate3d(0, 0, 0) rotate(0deg); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate3d(var(--x, 0px), 110vh, 0) rotate(360deg); }
+  }
+}

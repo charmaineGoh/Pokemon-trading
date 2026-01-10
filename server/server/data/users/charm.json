@@ -1,0 +1,31 @@
+{
+  "username": "charm",
+  "cards": [
+    {
+      "id": "1708d998-ddf3-41e5-8d11-74b37e33b2bd",
+      "name": "meow",
+      "price": 12,
+      "condition": 7,
+      "imageUrl": "/uploads/keep/da0c2d5d-653b-4cab-a453-bb642bb71633.png",
+      "createdAt": "2026-01-10T09:12:26.436Z"
+    }
+  ],
+  "trades": [
+    {
+      "id": "e162c5a6-dcc1-4938-998d-70c2d0aca91e",
+      "from": "keep",
+      "to": "charm",
+      "ownerCardId": "a2b72005-e9a1-4dec-ab7c-daa8044fd7fb",
+      "offeredCard": {
+        "id": "1708d998-ddf3-41e5-8d11-74b37e33b2bd",
+        "name": "meow",
+        "price": 12,
+        "condition": 7,
+        "imageUrl": "/uploads/keep/da0c2d5d-653b-4cab-a453-bb642bb71633.png",
+        "createdAt": "2026-01-10T09:12:26.436Z"
+      },
+      "status": "accepted",
+      "createdAt": "2026-01-10T09:12:26.436Z"
+    }
+  ]
+}

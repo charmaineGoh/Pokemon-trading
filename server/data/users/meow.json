@@ -1,0 +1,48 @@
+{
+  "username": "meow",
+  "cards": [
+    {
+      "id": "51647b57-da47-448e-8597-38a80a854ee9",
+      "name": "09ab0b1d",
+      "price": 123,
+      "condition": 10,
+      "imageUrl": "/uploads/ad/09ab0b1d-637b-4d71-ae1f-af6177ad4404.jpg",
+      "createdAt": "2026-01-10T10:00:55.482Z"
+    },
+    {
+      "id": "190e2994-5e06-469a-8d68-92b45694eba0",
+      "name": "Eac6fb0a",
+      "price": 45,
+      "condition": 7,
+      "imageUrl": "/uploads/meow/eac6fb0a-c1e8-45d3-8dba-fb63dfd944ef.png",
+      "createdAt": "2026-01-10T10:14:18.207Z"
+    },
+    {
+      "id": "9e1f3328-57bf-4732-b117-30462ec35fb4",
+      "name": "Charizard",
+      "price": 23,
+      "condition": 7,
+      "imageUrl": "/uploads/meow/20f4ec05-a43c-47c4-b0d7-1f83a565d9da.png",
+      "createdAt": "2026-01-10T11:06:03.652Z"
+    }
+  ],
+  "trades": [
+    {
+      "id": "d2f5e7e2-3744-4ad2-a9b6-3d40ace55b6a",
+      "from": "ad",
+      "to": "meow",
+      "ownerCardId": "74b242a8-c75d-487f-afc3-632c42c00cad",
+      "offeredCard": {
+        "id": "190e2994-5e06-469a-8d68-92b45694eba0",
+        "name": "Eac6fb0a",
+        "price": 45,
+        "condition": 7,
+        "imageUrl": "/uploads/meow/eac6fb0a-c1e8-45d3-8dba-fb63dfd944ef.png",
+        "createdAt": "2026-01-10T10:14:18.207Z"
+      },
+      "status": "accepted",
+      "createdAt": "2026-01-10T10:59:20.710Z"
+    }
+  ],
+  "profilePic": "bulbasaur"
+}
