@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiUrl } from '../api.js';
 
 const PROFILE_PICS = [
   { name: 'eevee', label: 'Eevee', img: '/profiles/eevee.png' },
@@ -20,7 +21,7 @@ export default function Login({ onLogin }) {
     try {
       const payload = mode === 'signup' ? { username: uname, profilePic } : { username: uname };
       const endpoint = mode === 'signup' ? '/api/users/signup' : '/api/users/login';
-      const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const res = await fetch(apiUrl(endpoint), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       let data = {};
       try {
         data = await res.json();

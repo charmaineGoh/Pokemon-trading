@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CardGrid from '../components/CardGrid.jsx';
 import AddCardModal from '../components/AddCardModal.jsx';
 import ShareLinkModal from '../components/ShareLinkModal.jsx';
+import { apiUrl } from '../api.js';
 
 function triggerConfetti() {
   const colors = ['#FFCB05', '#3B4CCA', '#FF7F50', '#34D399', '#F472B6'];
@@ -28,14 +29,14 @@ export default function Dashboard({ currentUser, onLogout, onNavigate }) {
   const [trades, setTrades] = useState([]);
 
   async function refresh() {
-    const res = await fetch(`/api/users/${currentUser.username}`);
+    const res = await fetch(apiUrl(`/api/users/${currentUser.username}`));
     const data = await res.json();
     if (res.ok) {
       setUser(data.user);
       const total = (data.user.cards || []).reduce((s, c) => s + (Number(c.price) || 0), 0);
       setTotalValue(total);
     }
-    const tr = await fetch(`/api/trades/${currentUser.username}`);
+    const tr = await fetch(apiUrl(`/api/trades/${currentUser.username}`));
     const tdata = await tr.json();
     if (tr.ok) setTrades(tdata.trades || []);
   }
@@ -172,14 +173,14 @@ export default function Dashboard({ currentUser, onLogout, onNavigate }) {
 
 function TradeRow({ trade, refresh }) {
   async function accept() {
-    const res = await fetch(`/api/trades/${trade.to}/${trade.id}/accept`, { method: 'POST' });
+    const res = await fetch(apiUrl(`/api/trades/${trade.to}/${trade.id}/accept`), { method: 'POST' });
     if (res.ok) {
       triggerConfetti();
       refresh();
     }
   }
   async function decline() {
-    const res = await fetch(`/api/trades/${trade.to}/${trade.id}/decline`, { method: 'POST' });
+    const res = await fetch(apiUrl(`/api/trades/${trade.to}/${trade.id}/decline`), { method: 'POST' });
     if (res.ok) refresh();
   }
   return (
