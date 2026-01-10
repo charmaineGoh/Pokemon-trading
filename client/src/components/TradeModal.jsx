@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiUrl } from '../api.js';
 
 export default function TradeModal({ targetCard, currentUser, onClose, onCreated }) {
   const [mode, setMode] = useState('existing'); // 'existing' or 'upload'
@@ -13,7 +14,7 @@ export default function TradeModal({ targetCard, currentUser, onClose, onCreated
 
   useEffect(() => {
     async function loadMyCards() {
-      const res = await fetch(`/api/users/${currentUser.username}`);
+      const res = await fetch(apiUrl(`/api/users/${currentUser.username}`));
       const data = await res.json();
       if (res.ok) setMyCards(data.user.cards || []);
     }
@@ -44,7 +45,7 @@ export default function TradeModal({ targetCard, currentUser, onClose, onCreated
         return;
       }
 
-      const res = await fetch('/api/trades/create', { method: 'POST', body: fd });
+      const res = await fetch(apiUrl('/api/trades/create'), { method: 'POST', body: fd });
       const data = await res.json();
       if (res.ok) { onCreated(data.trade); onClose(); }
       else setError(data.error || 'Failed to create trade');

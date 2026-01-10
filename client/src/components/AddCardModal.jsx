@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiUrl } from '../api.js';
 
 export default function AddCardModal({ currentUser, onClose, onAdded }) {
   const [image, setImage] = useState(null);
@@ -14,7 +15,7 @@ export default function AddCardModal({ currentUser, onClose, onAdded }) {
       setDetecting(true);
       const fd = new FormData();
       fd.append('image', file);
-      const res = await fetch('/api/cards/recognize', { method: 'POST', body: fd });
+      const res = await fetch(apiUrl('/api/cards/recognize'), { method: 'POST', body: fd });
       const data = await res.json();
       if (res.ok && data.name) {
         setName(data.name);
@@ -37,7 +38,7 @@ export default function AddCardModal({ currentUser, onClose, onAdded }) {
       fd.append('price', price || '0');
       fd.append('condition', condition || '5');
       fd.append('image', image);
-      const res = await fetch('/api/cards/add', { method: 'POST', body: fd });
+      const res = await fetch(apiUrl('/api/cards/add'), { method: 'POST', body: fd });
       const data = await res.json();
       if (res.ok) { onAdded(data.card, data.totalValue); onClose(); }
       else setError(data.error || 'Failed to add card');
