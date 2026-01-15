@@ -241,11 +241,12 @@ app.post("/api/trades/create", upload.single("offeredImage"), async (req, res) =
 
       if (req.file) {
         const imgPath = req.file.path;
+        
+        // Try extracting name from image BEFORE uploading (file will be deleted after)
+        if (!offeredName) derivedName = await extractCardNameFromImage(imgPath);
+        
         // Upload to Cloudinary
         offeredImageUrl = await uploadToCloudinary(imgPath, requester.username);
-
-        // Try extracting name from image if not provided
-        if (!offeredName) derivedName = await extractCardNameFromImage(imgPath);
       }
 
       offeredCard = {
