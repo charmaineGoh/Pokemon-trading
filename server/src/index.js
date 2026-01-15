@@ -133,7 +133,11 @@ app.post("/api/cards/add", upload.single("image"), async (req, res) => {
         : await extractCardNameFromImage(imgPath);
 
     const id = uuidv4();
-    const imageUrl = `/uploads/${user.username}/${path.basename(imgPath)}`;
+    const baseUrl =
+  process.env.PUBLIC_BASE_URL || `${req.protocol}://${req.get("host")}`;
+
+const imageUrl = `${baseUrl}/uploads/${user.username}/${path.basename(imgPath)}`;
+
 
     const card = {
       id,
