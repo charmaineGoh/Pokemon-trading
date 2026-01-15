@@ -6,9 +6,17 @@ import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { userFile, readJson, writeJson, ensureDir } from './utils/fileStore.js';
 import { extractCardNameFromImage } from './services/ocr.js';
+import { fileURLToPath } from "url";
+
+
+
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use(cors());
 app.use(express.json());
