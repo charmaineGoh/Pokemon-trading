@@ -19,10 +19,6 @@
       "dest": "/server/src/index.js"
     },
     {
-      "src": "/uploads/(.*)",
-      "dest": "/server/src/index.js"
-    },
-    {
       "handle": "filesystem"
     },
     {
@@ -31,4 +27,3 @@
     }
   ]
 }
-
