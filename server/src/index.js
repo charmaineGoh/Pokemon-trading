@@ -5,9 +5,13 @@ import path from "path";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { v2 as cloudinary } from "cloudinary";
+import dotenv from "dotenv";
 import { userFile, readJson, writeJson, ensureDir } from "./utils/fileStore.js";
 import { extractCardNameFromImage } from "./services/ocr.js";
 import { fileURLToPath } from "url";
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
