@@ -4,12 +4,20 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
+import { v2 as cloudinary } from "cloudinary";
 import { userFile, readJson, writeJson, ensureDir } from "./utils/fileStore.js";
 import { extractCardNameFromImage } from "./services/ocr.js";
 import { fileURLToPath } from "url";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+// --- Cloudinary Configuration ---
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // --- ESM-safe __dirname ---
 const __filename = fileURLToPath(import.meta.url);
@@ -18,40 +26,14 @@ const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json());
 
-// --- Uploads: save + serve from server/uploads ---
+// --- Uploads: save to Cloudinary ---
 const UPLOADS_DIR = path.join(__dirname, "../uploads");
 ensureDir(UPLOADS_DIR);
 
-// Serve uploaded images publicly
-app.use("/uploads", express.static(UPLOADS_DIR));
-
-// Basic liveness endpoints
-app.get("/", (req, res) => {
-  res.json({
-    status: "ok",
-    message: "Pokemon Trading API",
-    routes: [
-      "/api/users/signup",
-      "/api/users/login",
-      "/api/users/:username",
-      "/api/cards/add",
-    ],
-  });
-});
-
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
-});
-
-// Multer storage per-user
+// Multer storage (for temporary local storage before uploading to Cloudinary)
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const username = (req.body.username || req.body.requesterUsername || "public")
-      .trim()
-      .toLowerCase();
-    const dir = path.join(UPLOADS_DIR, username);
-    ensureDir(dir);
-    cb(null, dir);
+    cb(null, UPLOADS_DIR);
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname) || ".jpg";
@@ -60,6 +42,22 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
+// Helper function to upload to Cloudinary
+async function uploadToCloudinary(filePath, folder) {
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: `pokemon-trading/${folder}`,
+      resource_type: "auto",
+    });
+    // Delete local file after upload
+    fs.unlinkSync(filePath);
+    return result.secure_url;
+  } catch (error) {
+    console.error("Cloudinary upload error:", error);
+    throw error;
+  }
+}
 
 function getUser(usernameRaw) {
   const username = usernameRaw.trim().toLowerCase();
@@ -132,11 +130,10 @@ app.post("/api/cards/add", upload.single("image"), async (req, res) => {
         ? providedName.trim()
         : await extractCardNameFromImage(imgPath);
 
-    const id = uuidv4();
-    const baseUrl =
-  process.env.PUBLIC_BASE_URL || `${req.protocol}://${req.get("host")}`;
+    // Upload to Cloudinary
+    const imageUrl = await uploadToCloudinary(imgPath, username);
 
-const imageUrl = `${baseUrl}/uploads/${user.username}/${path.basename(imgPath)}`;
+    const id = uuidv4();
 
 
     const card = {
@@ -244,7 +241,8 @@ app.post("/api/trades/create", upload.single("offeredImage"), async (req, res) =
 
       if (req.file) {
         const imgPath = req.file.path;
-        offeredImageUrl = `/uploads/${requester.username}/${path.basename(imgPath)}`;
+        // Upload to Cloudinary
+        offeredImageUrl = await uploadToCloudinary(imgPath, requester.username);
 
         // Try extracting name from image if not provided
         if (!offeredName) derivedName = await extractCardNameFromImage(imgPath);
